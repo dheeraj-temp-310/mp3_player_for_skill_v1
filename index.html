@@ -11,314 +11,116 @@
   <style>
     :root {
       --glass-bg: rgba(255, 255, 255, 0.065);
-      --glass-bg-strong: rgba(255, 255, 255, 0.11);
       --glass-border: rgba(255, 255, 255, 0.16);
-      --glass-highlight: rgba(255, 255, 255, 0.28);
-      --accent-glow: #60a5fa;
     }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
-      background-color: #07080d;
-      color: #f8fafc;
-      overflow-x: hidden;
-      min-height: 100vh;
+      background-color: #07080d; color: #f8fafc; overflow-x: hidden; min-height: 100vh;
     }
+    .mono { font-family: "SF Mono", "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
 
-    .mono {
-      font-family: "SF Mono", "JetBrains Mono", monospace;
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* Ambient animated Apple-style mesh blobs */
     .ambient-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
+      position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
       background: radial-gradient(circle at 50% 20%, #111629 0%, #06070b 75%);
     }
-
     .blob {
-      position: absolute;
-      border-radius: 9999px;
-      filter: blur(95px);
-      opacity: 0.52;
+      position: absolute; border-radius: 9999px; filter: blur(95px); opacity: 0.52;
       transition: background 1.4s cubic-bezier(0.22, 1, 0.36, 1), transform 1.4s ease;
       will-change: transform, background;
     }
+    .blob-1 { width: 34rem; height: 34rem; top: -10%; left: -8%; background: #4f46e5; animation: floatBlob1 22s ease-in-out infinite alternate; }
+    .blob-2 { width: 30rem; height: 30rem; bottom: -12%; right: -6%; background: #0ea5e9; animation: floatBlob2 26s ease-in-out infinite alternate; }
+    .blob-3 { width: 24rem; height: 24rem; top: 38%; left: 42%; background: #ec4899; opacity: 0.32; animation: floatBlob3 19s ease-in-out infinite alternate; }
+    @keyframes floatBlob1 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(90px, 60px) scale(1.15); } }
+    @keyframes floatBlob2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-80px, -70px) scale(1.12); } }
+    @keyframes floatBlob3 { 0% { transform: translate(-40px, -30px) scale(0.95); } 100% { transform: translate(60px, -50px) scale(1.18); } }
 
-    .blob-1 {
-      width: 34rem;
-      height: 34rem;
-      top: -10%;
-      left: -8%;
-      background: #4f46e5;
-      animation: floatBlob1 22s ease-in-out infinite alternate;
-    }
-
-    .blob-2 {
-      width: 30rem;
-      height: 30rem;
-      bottom: -12%;
-      right: -6%;
-      background: #0ea5e9;
-      animation: floatBlob2 26s ease-in-out infinite alternate;
-    }
-
-    .blob-3 {
-      width: 24rem;
-      height: 24rem;
-      top: 38%;
-      left: 42%;
-      background: #ec4899;
-      opacity: 0.32;
-      animation: floatBlob3 19s ease-in-out infinite alternate;
-    }
-
-    @keyframes floatBlob1 {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(90px, 60px) scale(1.15); }
-    }
-    @keyframes floatBlob2 {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(-80px, -70px) scale(1.12); }
-    }
-    @keyframes floatBlob3 {
-      0% { transform: translate(-40px, -30px) scale(0.95); }
-      100% { transform: translate(60px, -50px) scale(1.18); }
-    }
-
-    /* Apple VisionOS / macOS Frosted Glass */
     .glass-panel {
       background: var(--glass-bg);
-      backdrop-filter: blur(28px) saturate(185%);
-      -webkit-backdrop-filter: blur(28px) saturate(185%);
+      backdrop-filter: blur(28px) saturate(185%); -webkit-backdrop-filter: blur(28px) saturate(185%);
       border: 1px solid var(--glass-border);
-      box-shadow:
-        0 28px 60px -15px rgba(0, 0, 0, 0.65),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
-        inset 0 0 24px rgba(255, 255, 255, 0.02);
+      box-shadow: 0 28px 60px -15px rgba(0,0,0,0.65), inset 0 1px 0 0 rgba(255,255,255,0.22), inset 0 0 24px rgba(255,255,255,0.02);
     }
-
     .glass-card {
       background: rgba(255, 255, 255, 0.045);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow:
-        0 10px 30px -10px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.4), inset 0 1px 0 0 rgba(255,255,255,0.15);
     }
-
     .glass-pill {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
-    .glass-pill:hover {
-      background: rgba(255, 255, 255, 0.13);
-      border-color: rgba(255, 255, 255, 0.26);
-      transform: translateY(-1px);
-    }
-
-    .glass-pill:active {
-      transform: translateY(0px) scale(0.97);
-    }
-
+    .glass-pill:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.26); transform: translateY(-1px); }
+    .glass-pill:active { transform: translateY(0px) scale(0.97); }
     .glass-pill-active {
-      background: rgba(255, 255, 255, 0.92) !important;
-      color: #090d16 !important;
-      border-color: #ffffff !important;
-      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25), inset 0 1px 0 #fff !important;
-      font-weight: 600;
+      background: rgba(255, 255, 255, 0.92) !important; color: #090d16 !important; border-color: #ffffff !important;
+      box-shadow: 0 6px 20px rgba(255,255,255,0.25), inset 0 1px 0 #fff !important; font-weight: 600;
     }
 
-    /* Vinyl / Optical Disc Design */
-    .disc-stage {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    @media (min-width: 640px) {
-      .disc-stage {
-        width: 320px;
-        height: 320px;
-      }
-    }
-
+    .disc-stage { position: relative; width: 280px; height: 280px; display: flex; align-items: center; justify-content: center; }
+    @media (min-width: 640px) { .disc-stage { width: 320px; height: 320px; } }
     .vinyl-disc {
-      position: relative;
-      width: 82%;
-      height: 82%;
-      border-radius: 9999px;
+      position: relative; width: 82%; height: 82%; border-radius: 9999px;
       background:
-        radial-gradient(circle at center, transparent 18%, rgba(255, 255, 255, 0.03) 19%, transparent 20%),
-        repeating-radial-gradient(
-          circle at center,
-          #10121a 0px,
-          #10121a 2px,
-          #191c28 3px,
-          #0d0f17 4px
-        );
-      box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.75),
-        0 0 0 1px rgba(255, 255, 255, 0.16),
-        inset 0 0 28px rgba(0, 0, 0, 0.85);
+        radial-gradient(circle at center, transparent 18%, rgba(255,255,255,0.03) 19%, transparent 20%),
+        repeating-radial-gradient(circle at center, #10121a 0px, #10121a 2px, #191c28 3px, #0d0f17 4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.16), inset 0 0 28px rgba(0,0,0,0.85);
       will-change: transform;
     }
-
-    /* Iridescent sheen on the rotating disc */
     .vinyl-sheen {
-      position: absolute;
-      inset: 0;
-      border-radius: 9999px;
-      background: conic-gradient(
-        from 40deg,
-        transparent 0deg,
-        rgba(255, 255, 255, 0.11) 35deg,
-        transparent 75deg,
-        rgba(96, 165, 250, 0.09) 140deg,
-        transparent 180deg,
-        rgba(255, 255, 255, 0.12) 215deg,
-        transparent 255deg,
-        rgba(236, 72, 153, 0.08) 315deg,
-        transparent 360deg
-      );
-      pointer-events: none;
+      position: absolute; inset: 0; border-radius: 9999px; pointer-events: none;
+      background: conic-gradient(from 40deg, transparent 0deg, rgba(255,255,255,0.11) 35deg, transparent 75deg,
+        rgba(96,165,250,0.09) 140deg, transparent 180deg, rgba(255,255,255,0.12) 215deg, transparent 255deg,
+        rgba(236,72,153,0.08) 315deg, transparent 360deg);
     }
-
-    /* Tonearm styling */
     .tonearm-wrapper {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 90px;
-      height: 185px;
-      pointer-events: none;
-      z-index: 20;
-      transform-origin: 66px 24px;
-      transform: rotate(-28deg);
+      position: absolute; top: 12px; right: 12px; width: 90px; height: 185px; pointer-events: none; z-index: 20;
+      transform-origin: 66px 24px; transform: rotate(-28deg);
       transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
       filter: drop-shadow(0 10px 14px rgba(0,0,0,0.65));
     }
+    .tonearm-wrapper.engaged { transform: rotate(6deg); }
 
-    .tonearm-wrapper.engaged {
-      transform: rotate(6deg);
-    }
-
-    /* Custom Apple-like Range Sliders */
-    input[type="range"].apple-slider {
-      -webkit-appearance: none;
-      appearance: none;
-      background: transparent;
-      cursor: pointer;
-    }
-
-    input[type="range"].apple-slider::-webkit-slider-runnable-track {
-      height: 6px;
-      border-radius: 999px;
-    }
-
+    input[type="range"].apple-slider { -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; }
+    input[type="range"].apple-slider::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; }
     input[type="range"].apple-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 18px;
-      width: 18px;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.8);
-      margin-top: -6px;
+      -webkit-appearance: none; appearance: none; height: 18px; width: 18px; border-radius: 50%; background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.8); margin-top: -6px;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
+    input[type="range"].apple-slider:hover::-webkit-slider-thumb { transform: scale(1.15); box-shadow: 0 3px 14px rgba(255,255,255,0.4); }
 
-    input[type="range"].apple-slider:hover::-webkit-slider-thumb {
-      transform: scale(1.15);
-      box-shadow: 0 3px 14px rgba(255, 255, 255, 0.4);
-    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.32); }
 
-    /* Subtle scrollbar for playlist */
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.18);
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.32);
-    }
+    .drop-active { opacity: 1 !important; pointer-events: auto !important; }
+    .playlist-item-dragging { opacity: 0.4; transform: scale(0.98); }
+    .playlist-drop-above { border-top: 2px solid #38bdf8 !important; }
+    .playlist-drop-below { border-bottom: 2px solid #38bdf8 !important; }
 
-    /* Drag & Drop Overlay */
-    .drop-active {
-      opacity: 1 !important;
-      pointer-events: auto !important;
-    }
-
-    /* Playlist Drag Reordering Styles */
-    .playlist-item-dragging {
-      opacity: 0.4;
-      transform: scale(0.98);
-    }
-    .playlist-drop-above {
-      border-top: 2px solid #38bdf8 !important;
-    }
-    .playlist-drop-below {
-      border-bottom: 2px solid #38bdf8 !important;
-    }
-
-    /* YouTube-style Progress Bar Marker Dots */
     .timeline-marker-dot {
-      position: absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 10px;
-      height: 10px;
-      border-radius: 9999px;
-      background: #fbbf24;
-      border: 2px solid #ffffff;
-      box-shadow: 0 0 8px rgba(251, 191, 36, 0.85);
-      cursor: pointer;
-      z-index: 20;
-      transition: transform 0.15s ease, background-color 0.15s ease;
+      position: absolute; top: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; border-radius: 9999px;
+      background: #fbbf24; border: 2px solid #ffffff; box-shadow: 0 0 8px rgba(251,191,36,0.85);
+      cursor: pointer; z-index: 20; transition: transform 0.15s ease, background-color 0.15s ease;
     }
-    .timeline-marker-dot:hover {
-      transform: translate(-50%, -50%) scale(1.45);
-      background: #f59e0b;
-    }
-    .timeline-marker-dot.active-last-marker {
-      background: #38bdf8;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 1);
-    }
+    .timeline-marker-dot:hover { transform: translate(-50%, -50%) scale(1.45); background: #f59e0b; }
+    .timeline-marker-dot.active-last-marker { background: #38bdf8; box-shadow: 0 0 12px rgba(56,189,248,1); }
   </style>
 </head>
 <body class="relative selection:bg-white/20 selection:text-white">
 
-  <!-- Ambient Apple Glass Background Blobs -->
   <div class="ambient-canvas">
     <div id="blob1" class="blob blob-1"></div>
     <div id="blob2" class="blob blob-2"></div>
     <div id="blob3" class="blob blob-3"></div>
   </div>
 
-  <!-- Full-window Drag and Drop Overlay -->
+  <!-- Drag and Drop Overlay -->
   <div id="dropOverlay" class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-300 bg-black/60 backdrop-blur-xl flex items-center justify-center p-6">
     <div class="glass-panel rounded-3xl p-10 max-w-md w-full text-center border-2 border-dashed border-white/40">
       <div class="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 mx-auto flex items-center justify-center mb-4">
@@ -331,10 +133,8 @@
     </div>
   </div>
 
-  <!-- Main Container -->
   <div class="relative z-10 min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
 
-    <!-- Top Navigation Bar -->
     <header class="flex flex-wrap items-center justify-between gap-3 mb-6">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-2xl glass-panel flex items-center justify-center shadow-inner">
@@ -353,7 +153,6 @@
         </div>
       </div>
 
-      <!-- Top Action Pills -->
       <div class="flex items-center gap-2.5">
         <label for="fileInput" class="glass-pill cursor-pointer px-3.5 py-2 rounded-full text-xs font-medium text-white/90 flex items-center gap-2">
           <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -377,20 +176,16 @@
       </div>
     </header>
 
-    <!-- Core Workspace Grid -->
     <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start my-auto">
 
-      <!-- Left / Center Column: Rotating Disc + Playback & Speed Deck (7 cols) -->
+      <!-- Main Deck -->
       <section class="lg:col-span-7 glass-panel rounded-[32px] p-5 sm:p-7 relative overflow-hidden">
 
-        <!-- Top Mini Status Bar inside Main Deck -->
         <div class="flex items-center justify-between gap-2 mb-4">
           <div class="flex items-center gap-2">
             <span id="playStateDot" class="w-2 h-2 rounded-full bg-white/30 transition-colors"></span>
             <span id="playStateText" class="text-xs font-medium tracking-wide uppercase text-white/60">Standby</span>
           </div>
-
-          <!-- Live RPM & Speed Readout Badge -->
           <div class="flex items-center gap-2">
             <div class="glass-card px-3 py-1 rounded-full flex items-center gap-2 text-xs">
               <span class="text-white/50">RPM</span>
@@ -403,49 +198,35 @@
           </div>
         </div>
 
-        <!-- Rotating Vinyl / Optical Disc Stage with Radial Visualizer -->
         <div class="flex flex-col items-center justify-center my-2 relative">
           <div class="disc-stage" id="discStage">
-            <!-- Ambient Dynamic Glow Ring Behind Disc -->
             <div id="discGlow" class="absolute inset-5 rounded-full opacity-40 blur-2xl transition-all duration-700 pointer-events-none"
                  style="background: conic-gradient(from 0deg, #6366f1, #38bdf8, #ec4899, #6366f1);"></div>
 
-            <!-- Real-time Radial Audio Visualizer Canvas -->
             <canvas id="visualizerCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
 
-            <!-- The Rotating Disc -->
             <div id="vinylDisc" class="vinyl-disc flex items-center justify-center cursor-pointer group" title="Click disc to Play / Pause">
               <div class="vinyl-sheen"></div>
-
-              <!-- Fine groove rings -->
               <div class="absolute inset-[12%] rounded-full border border-white/[0.05] pointer-events-none"></div>
               <div class="absolute inset-[22%] rounded-full border border-white/[0.04] pointer-events-none"></div>
               <div class="absolute inset-[31%] rounded-full border border-white/[0.06] pointer-events-none"></div>
 
-              <!-- Center Album Label -->
               <div id="discLabel" class="relative w-[42%] h-[42%] rounded-full overflow-hidden shadow-inner border border-white/25 flex flex-col items-center justify-center p-2 text-center transition-colors duration-700"
                    style="background: linear-gradient(135deg, #4f46e5, #0ea5e9);">
                 <span id="discLabelSub" class="text-[8px] uppercase tracking-[0.2em] text-white/75 font-semibold">AURA HI-FI</span>
                 <span id="discLabelTitle" class="text-[10px] font-semibold text-white line-clamp-1 mt-0.5 px-2">No Track Loaded</span>
-                <!-- Center Spindle Hole -->
                 <div class="w-4 h-4 rounded-full bg-[#090b11] border border-white/30 shadow-inner mt-1"></div>
               </div>
 
-              <!-- Angular reference marker so rotation speed is visually unmistakable -->
               <div class="absolute top-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white/50 shadow"></div>
             </div>
 
-            <!-- Stylus Tonearm SVG -->
             <div id="tonearm" class="tonearm-wrapper">
               <svg viewBox="0 0 100 200" class="w-full h-full">
-                <!-- Pivot base -->
                 <circle cx="66" cy="24" r="16" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
                 <circle cx="66" cy="24" r="7" fill="#e2e8f0"/>
-                <!-- Arm tube -->
                 <path d="M66 24 L62 132 L40 166" fill="none" stroke="url(#armGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <!-- Headshell -->
                 <polygon points="35,162 47,168 38,183 28,176" fill="#f8fafc" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-                <!-- Glowing stylus tip -->
                 <circle cx="32" cy="180" r="2.5" fill="#38bdf8" />
                 <defs>
                   <linearGradient id="armGrad" x1="0" y1="0" x2="0" y2="1">
@@ -457,28 +238,19 @@
             </div>
           </div>
 
-          <!-- Track Metadata -->
           <div class="text-center mt-2 max-w-md px-4">
             <h2 id="trackTitle" class="text-xl sm:text-2xl font-semibold tracking-tight text-white truncate">No Audio Loaded</h2>
             <p id="trackArtist" class="text-xs sm:text-sm text-white/60 mt-0.5 truncate">Drag &amp; drop audio files or click "Add Audio Files" above</p>
           </div>
         </div>
 
-        <!-- Interactive Seek & Progress Bar with Hover Timestamp + A-B Loop + YouTube Markers -->
+        <!-- Progress Bar -->
         <div class="mt-5">
           <div class="relative py-2.5 group" id="progressContainer">
-            <!-- Hover time & marker tooltip -->
-            <div id="seekTooltip" class="opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none absolute -top-7 -translate-x-1/2 px-2 py-0.5 rounded-md bg-white text-slate-950 text-[11px] mono font-semibold shadow whitespace-nowrap z-30">
-              0:00
-            </div>
-
-            <!-- Track background -->
+            <div id="seekTooltip" class="opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none absolute -top-7 -translate-x-1/2 px-2 py-0.5 rounded-md bg-white text-slate-950 text-[11px] mono font-semibold shadow whitespace-nowrap z-30">0:00</div>
             <div id="progressBarTrack" class="w-full h-2.5 rounded-full bg-white/15 relative cursor-pointer">
-              <!-- A-B Loop Highlight Region -->
               <div id="abHighlight" class="hidden absolute top-0 bottom-0 bg-amber-400/35 border-x border-amber-300 pointer-events-none rounded-full"></div>
-              <!-- Filled Progress -->
               <div id="progressFill" class="h-full bg-gradient-to-r from-sky-400 via-indigo-400 to-pink-400 rounded-full w-0 transition-[width] duration-75 pointer-events-none"></div>
-              <!-- YouTube-Style Timestamp Marker Dots Layer -->
               <div id="timelineMarkersLayer" class="absolute inset-0 pointer-events-auto"></div>
             </div>
           </div>
@@ -493,11 +265,10 @@
           </div>
         </div>
 
-        <!-- YouTube-Style Timestamp Marker Controls Strip -->
+        <!-- Marker Controls -->
         <div class="mt-4 glass-card rounded-2xl p-3 border border-white/10">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex flex-wrap items-center gap-2">
-              <!-- Add Timestamp Marker Button -->
               <button id="addMarkerBtn" class="glass-pill px-3 py-1.5 rounded-xl text-xs font-medium text-amber-300 border-amber-400/30 flex items-center gap-1.5" title="Bookmark current timestamp (Shortcut: B)">
                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
@@ -505,7 +276,14 @@
                 <span>+ Add Marker</span>
               </button>
 
-              <!-- Hero Action: Play from Last Marker -->
+              <!-- NEW: Save Markers Button -->
+              <button id="saveMarkersBtn" class="glass-pill px-3 py-1.5 rounded-xl text-xs font-medium text-emerald-300 border-emerald-400/30 flex items-center gap-1.5" title="Save markers of this track in the browser (overwrites previous save) — Ctrl+S">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+                <span id="saveMarkersLabel">Save Markers</span>
+              </button>
+
               <button id="playLastMarkerBtn" class="glass-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold text-sky-200 bg-sky-500/20 border-sky-400/40 hover:bg-sky-500/30 flex items-center gap-1.5 shadow-sm" title="Jump & Play from the last passed marker instead of 0:00 (Shortcut: J)">
                 <svg class="w-3.5 h-3.5 text-sky-300" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
@@ -514,7 +292,6 @@
               </button>
             </div>
 
-            <!-- Toggle: Start from Last Marker on Play -->
             <label class="flex items-center gap-2 cursor-pointer text-[11px] text-white/75 select-none" title="When enabled, pressing Play or Restart jumps to the last marker instead of the beginning">
               <input id="playFromMarkerModeToggle" type="checkbox" class="sr-only peer" />
               <div class="w-7 h-4 bg-white/15 peer-checked:bg-sky-400 rounded-full relative transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:w-3 after:h-3 after:rounded-full after:transition-transform peer-checked:after:translate-x-3"></div>
@@ -522,116 +299,73 @@
             </label>
           </div>
 
-          <!-- Optional Custom Marker Label Input & Saved Markers Chips -->
           <div class="mt-2.5 flex items-center gap-2">
             <input id="markerLabelInput" type="text" maxlength="28" placeholder="Optional marker note (e.g. Chorus, Drop, Solo)..."
                    class="w-full sm:w-56 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-white placeholder-white/35 focus:outline-none focus:border-sky-400/60" />
             <span id="markerCountBadge" class="text-[11px] mono text-white/45 shrink-0">0 markers</span>
           </div>
 
-          <!-- Interactive Saved Markers Chip List for Active Track -->
           <div id="markersListContainer" class="mt-2 flex flex-wrap gap-1.5 max-h-24 overflow-y-auto empty:hidden"></div>
         </div>
 
-        <!-- Precision Skip Strip (-10s, -5s, Play/Pause, +5s, +10s) -->
+        <!-- Skip Strip -->
         <div class="mt-5 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          <!-- -10s Button -->
           <button data-skip="-10" class="skip-btn glass-pill px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold mono text-white/90 flex items-center gap-1" title="Rewind 10 seconds (Shift + Left)">
-            <svg class="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
-            </svg>
+            <svg class="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
             <span>-10s</span>
           </button>
-
-          <!-- -5s Button -->
           <button data-skip="-5" class="skip-btn glass-pill px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold mono text-white/90 flex items-center gap-1" title="Rewind 5 seconds (Left Arrow)">
-            <svg class="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-            </svg>
+            <svg class="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
             <span>-5s</span>
           </button>
-
-          <!-- Previous Track -->
           <button id="prevBtn" class="glass-pill p-3 rounded-2xl text-white/85 hover:text-white" title="Previous Track">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
-            </svg>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
           </button>
-
-          <!-- Master Play / Pause Button -->
           <button id="playPauseBtn" class="w-14 h-14 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.35)] hover:scale-105 active:scale-95 transition-all">
-            <svg id="playIcon" class="w-6 h-6 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <svg id="pauseIcon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-            </svg>
+            <svg id="playIcon" class="w-6 h-6 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pauseIcon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
-
-          <!-- Next Track -->
           <button id="nextBtn" class="glass-pill p-3 rounded-2xl text-white/85 hover:text-white" title="Next Track">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
-            </svg>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
           </button>
-
-          <!-- +5s Button -->
           <button data-skip="5" class="skip-btn glass-pill px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold mono text-white/90 flex items-center gap-1" title="Forward 5 seconds (Right Arrow)">
             <span>+5s</span>
-            <svg class="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-            </svg>
+            <svg class="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </button>
-
-          <!-- +10s Button -->
           <button data-skip="10" class="skip-btn glass-pill px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold mono text-white/90 flex items-center gap-1" title="Forward 10 seconds (Shift + Right)">
             <span>+10s</span>
-            <svg class="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
-            </svg>
+            <svg class="w-3.5 h-3.5 text-white/60" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
           </button>
         </div>
 
-        <!-- Secondary Utility Strip: -30s, +30s, A-B Repeat, Loop, Shuffle, Volume -->
+        <!-- Secondary Strip -->
         <div class="mt-4 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-1.5">
             <button data-skip="-30" class="skip-btn glass-pill px-2.5 py-1.5 rounded-xl text-[11px] mono text-white/75">-30s</button>
             <button data-skip="30" class="skip-btn glass-pill px-2.5 py-1.5 rounded-xl text-[11px] mono text-white/75">+30s</button>
-            <button id="abLoopBtn" class="glass-pill px-2.5 py-1.5 rounded-xl text-[11px] font-medium text-white/80" title="Set A-B Study Loop">
-              A–B Loop
-            </button>
+            <button id="abLoopBtn" class="glass-pill px-2.5 py-1.5 rounded-xl text-[11px] font-medium text-white/80" title="Set A-B Study Loop">A–B Loop</button>
           </div>
 
           <div class="flex items-center gap-2">
             <button id="loopBtn" class="glass-pill p-2 rounded-xl text-white/60 hover:text-white" title="Toggle Loop Track">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-              </svg>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
             </button>
             <button id="shuffleBtn" class="glass-pill p-2 rounded-xl text-white/60 hover:text-white" title="Toggle Shuffle">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
-              </svg>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
             </button>
-
-            <!-- Volume Control -->
             <div class="flex items-center gap-2 glass-card px-3 py-1.5 rounded-xl">
               <button id="muteBtn" class="text-white/75 hover:text-white">
-                <svg id="volIcon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/>
-                </svg>
+                <svg id="volIcon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
               </button>
-              <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="0.85"
-                     class="apple-slider w-20 sm:w-24 bg-white/20 rounded-lg" />
+              <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="0.85" class="apple-slider w-20 sm:w-24 bg-white/20 rounded-lg" />
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Right Column: Granular Speed Controller (25% - 300%) + Playlist Drawer (5 cols) -->
+      <!-- Right Column -->
       <section class="lg:col-span-5 flex flex-col gap-6">
 
-        <!-- Granular Playback Speed Card (25% to 300%) -->
         <div class="glass-panel rounded-[32px] p-5 sm:p-6">
           <div class="flex items-center justify-between mb-4">
             <div>
@@ -647,31 +381,20 @@
             </div>
           </div>
 
-          <!-- Fine-Tune Slider + -5% / +5% Nudge Controls -->
           <div class="glass-card rounded-2xl p-3.5 mb-4">
             <div class="flex items-center gap-2.5">
-              <button id="speedMinus5" class="glass-pill px-2.5 py-1.5 rounded-xl text-xs font-semibold mono text-white/90 shrink-0" title="Decrease speed by 5%">
-                -5%
-              </button>
-
+              <button id="speedMinus5" class="glass-pill px-2.5 py-1.5 rounded-xl text-xs font-semibold mono text-white/90 shrink-0" title="Decrease speed by 5%">-5%</button>
               <div class="flex-1 flex flex-col">
                 <input id="speedSlider" type="range" min="25" max="300" step="1" value="100"
                        class="apple-slider w-full bg-gradient-to-r from-sky-500/40 via-indigo-400/40 to-pink-500/40 rounded-full" />
                 <div class="flex justify-between text-[10px] mono text-white/40 mt-1.5 px-0.5">
-                  <span>25%</span>
-                  <span>100%</span>
-                  <span>200%</span>
-                  <span>300%</span>
+                  <span>25%</span><span>100%</span><span>200%</span><span>300%</span>
                 </div>
               </div>
-
-              <button id="speedPlus5" class="glass-pill px-2.5 py-1.5 rounded-xl text-xs font-semibold mono text-white/90 shrink-0" title="Increase speed by 5%">
-                +5%
-              </button>
+              <button id="speedPlus5" class="glass-pill px-2.5 py-1.5 rounded-xl text-xs font-semibold mono text-white/90 shrink-0" title="Increase speed by 5%">+5%</button>
             </div>
           </div>
 
-          <!-- Quick Preset Percentage Pills -->
           <div class="grid grid-cols-5 gap-2 mb-4" id="speedPresetsGrid">
             <button data-speed="25" class="speed-preset glass-pill py-2 rounded-xl text-xs mono text-white/85">25%</button>
             <button data-speed="50" class="speed-preset glass-pill py-2 rounded-xl text-xs mono text-white/85">50%</button>
@@ -685,21 +408,16 @@
             <button data-speed="300" class="speed-preset glass-pill py-2 rounded-xl text-xs mono text-white/85">300%</button>
           </div>
 
-          <!-- Pitch Preservation & Quick Reset Bar -->
           <div class="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
             <label class="flex items-center gap-2.5 cursor-pointer select-none">
               <input id="preservePitchToggle" type="checkbox" checked class="sr-only peer" />
               <div class="w-9 h-5 bg-white/15 peer-checked:bg-sky-400 rounded-full relative transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:w-4 after:h-4 after:rounded-full after:transition-transform peer-checked:after:translate-x-4"></div>
               <span class="text-white/80 font-medium">Preserve Pitch <span class="text-white/40">(Anti-Chipmunk)</span></span>
             </label>
-
-            <button id="resetSpeedBtn" class="text-sky-300 hover:text-white font-medium transition-colors">
-              Reset 100%
-            </button>
+            <button id="resetSpeedBtn" class="text-sky-300 hover:text-white font-medium transition-colors">Reset 100%</button>
           </div>
         </div>
 
-        <!-- Playlist & Local Audio Files Drawer -->
         <div class="glass-panel rounded-[32px] p-5 sm:p-6 flex-1 flex flex-col">
           <div class="flex items-center justify-between mb-3">
             <div>
@@ -707,102 +425,63 @@
               <p class="text-xs text-white/50">Drag to reorder or use &uarr;/&darr; arrows</p>
             </div>
             <div class="flex items-center gap-2">
-              <button id="clearQueueBtn" class="hidden glass-pill px-2.5 py-1 rounded-full text-[11px] text-rose-300/85 hover:text-rose-200" title="Clear all tracks">
-                Clear
-              </button>
+              <button id="clearQueueBtn" class="hidden glass-pill px-2.5 py-1 rounded-full text-[11px] text-rose-300/85 hover:text-rose-200" title="Clear all tracks">Clear</button>
               <span id="trackCountBadge" class="glass-card px-2.5 py-1 rounded-full text-xs mono text-white/75">0 tracks</span>
             </div>
           </div>
 
-          <!-- Track List Container -->
           <div id="playlistContainer" class="space-y-2 max-h-64 overflow-y-auto pr-1"></div>
 
-          <!-- Dropzone Prompt Footer -->
           <label for="fileInput" class="mt-4 glass-card hover:bg-white/10 transition-colors cursor-pointer rounded-2xl p-3 border border-dashed border-white/20 flex items-center justify-center gap-2 text-xs text-white/70">
-            <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-            </svg>
+            <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
             <span>Drag &amp; drop audio files anywhere or click to browse</span>
           </label>
         </div>
-
       </section>
     </main>
 
-    <!-- Subtle Keyboard Shortcut Footer Hint -->
     <footer class="mt-6 flex flex-wrap items-center justify-between gap-2 text-[11px] text-white/45 px-1">
       <div class="flex flex-wrap items-center gap-3">
-        <span><strong class="text-white/70 mono">Space</strong> Play/Pause</span>
-        <span>&bull;</span>
-        <span><strong class="text-white/70 mono">B</strong> +Bookmark Marker</span>
-        <span>&bull;</span>
-        <span><strong class="text-white/70 mono">J</strong> Play Last Marker</span>
-        <span>&bull;</span>
-        <span><strong class="text-white/70 mono">&larr;/&rarr;</strong> -5s / +5s</span>
-        <span>&bull;</span>
-        <span><strong class="text-white/70 mono">Shift + &larr;/&rarr;</strong> -10s / +10s</span>
-        <span>&bull;</span>
+        <span><strong class="text-white/70 mono">Space</strong> Play/Pause</span><span>&bull;</span>
+        <span><strong class="text-white/70 mono">B</strong> +Bookmark Marker</span><span>&bull;</span>
+        <span><strong class="text-white/70 mono">Ctrl+S</strong> Save Markers</span><span>&bull;</span>
+        <span><strong class="text-white/70 mono">J</strong> Play Last Marker</span><span>&bull;</span>
+        <span><strong class="text-white/70 mono">&larr;/&rarr;</strong> -5s / +5s</span><span>&bull;</span>
+        <span><strong class="text-white/70 mono">Shift + &larr;/&rarr;</strong> -10s / +10s</span><span>&bull;</span>
         <span><strong class="text-white/70 mono">[ / ]</strong> -5% / +5% Speed</span>
       </div>
       <div>Aura Glassmorphism Audio Engine</div>
     </footer>
   </div>
 
-  <!-- Keyboard Shortcuts Modal -->
+  <!-- Shortcuts Modal -->
   <div id="shortcutsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-md p-4">
     <div class="glass-panel rounded-3xl p-6 max-w-md w-full border border-white/20">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold text-white">Keyboard Shortcuts</h3>
         <button id="closeShortcutsBtn" class="glass-pill p-1.5 rounded-full text-white/70 hover:text-white">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="space-y-2.5 text-xs">
-        <div class="flex justify-between py-1.5 border-b border-white/10">
-          <span class="text-white/70">Play / Pause</span>
-          <kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">Space</kbd>
-        </div>
-        <div class="flex justify-between py-1.5 border-b border-white/10">
-          <span class="text-white/70">Add Timestamp Marker</span>
-          <kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">B</kbd>
-        </div>
-        <div class="flex justify-between py-1.5 border-b border-white/10">
-          <span class="text-white/70">Play from Last Marker</span>
-          <kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">J</kbd>
-        </div>
-        <div class="flex justify-between py-1.5 border-b border-white/10">
-          <span class="text-white/70">Skip -5s / +5s</span>
-          <kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">&larr; / &rarr;</kbd>
-        </div>
-        <div class="flex justify-between py-1.5 border-b border-white/10">
-          <span class="text-white/70">Skip -10s / +10s</span>
-          <kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">Shift + &larr; / &rarr;</kbd>
-        </div>
-        <div class="flex justify-between py-1.5 border-b border-white/10">
-          <span class="text-white/70">Speed -5% / +5%</span>
-          <kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">[ / ]</kbd>
-        </div>
-        <div class="flex justify-between py-1.5 border-b border-white/10">
-          <span class="text-white/70">Reset Speed to 100%</span>
-          <kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">R</kbd>
-        </div>
-        <div class="flex justify-between py-1.5">
-          <span class="text-white/70">Mute / Unmute</span>
-          <kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">M</kbd>
-        </div>
+        <div class="flex justify-between py-1.5 border-b border-white/10"><span class="text-white/70">Play / Pause</span><kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">Space</kbd></div>
+        <div class="flex justify-between py-1.5 border-b border-white/10"><span class="text-white/70">Add Timestamp Marker</span><kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">B</kbd></div>
+        <div class="flex justify-between py-1.5 border-b border-white/10"><span class="text-white/70">Save Markers</span><kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">Ctrl + S</kbd></div>
+        <div class="flex justify-between py-1.5 border-b border-white/10"><span class="text-white/70">Play from Last Marker</span><kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">J</kbd></div>
+        <div class="flex justify-between py-1.5 border-b border-white/10"><span class="text-white/70">Skip -5s / +5s</span><kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">&larr; / &rarr;</kbd></div>
+        <div class="flex justify-between py-1.5 border-b border-white/10"><span class="text-white/70">Skip -10s / +10s</span><kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">Shift + &larr; / &rarr;</kbd></div>
+        <div class="flex justify-between py-1.5 border-b border-white/10"><span class="text-white/70">Speed -5% / +5%</span><kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">[ / ]</kbd></div>
+        <div class="flex justify-between py-1.5 border-b border-white/10"><span class="text-white/70">Reset Speed to 100%</span><kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">R</kbd></div>
+        <div class="flex justify-between py-1.5"><span class="text-white/70">Mute / Unmute</span><kbd class="px-2 py-0.5 rounded bg-white/15 mono text-white">M</kbd></div>
       </div>
     </div>
   </div>
 
-  <!-- Hidden HTML5 Audio Element -->
   <audio id="audioElement" crossorigin="anonymous"></audio>
 
   <script>
     /********************************************************************
-     * 1. APPLICATION STATE & DOM ELEMENTS
-     * Starts with a clean, empty library (no default demo tracks).
+     * 1. STATE & DOM
      ********************************************************************/
     const audio = document.getElementById('audioElement');
     const vinylDisc = document.getElementById('vinylDisc');
@@ -826,6 +505,8 @@
     const lastMarkerIndicator = document.getElementById('lastMarkerIndicator');
 
     const addMarkerBtn = document.getElementById('addMarkerBtn');
+    const saveMarkersBtn = document.getElementById('saveMarkersBtn');
+    const saveMarkersLabel = document.getElementById('saveMarkersLabel');
     const playLastMarkerBtn = document.getElementById('playLastMarkerBtn');
     const playFromMarkerModeToggle = document.getElementById('playFromMarkerModeToggle');
     const markerLabelInput = document.getElementById('markerLabelInput');
@@ -849,10 +530,10 @@
     const dropOverlay = document.getElementById('dropOverlay');
 
     const state = {
-      tracks: [], // Clean empty playlist by default
+      tracks: [],
       currentIndex: -1,
       isPlaying: false,
-      speedPercent: 100, // 25 to 300
+      speedPercent: 100,
       preservesPitch: true,
       discAngle: 0,
       lastFrameTime: performance.now(),
@@ -869,13 +550,11 @@
     };
 
     /********************************************************************
-     * 2. WEB AUDIO API ANALYSER FOR RADIAL DISC VISUALIZER
+     * 2. WEB AUDIO ANALYSER
      ********************************************************************/
     function ensureAudioContext() {
       if (state.audioCtx) {
-        if (state.audioCtx.state === 'suspended') {
-          state.audioCtx.resume();
-        }
+        if (state.audioCtx.state === 'suspended') state.audioCtx.resume();
         return;
       }
       try {
@@ -888,26 +567,21 @@
         source.connect(state.analyser);
         state.analyser.connect(state.audioCtx.destination);
         state.freqData = new Uint8Array(state.analyser.frequencyBinCount);
-      } catch (e) {
-        // Fallback if MediaElementSource already attached
-      }
+      } catch (e) {}
     }
 
     /********************************************************************
-     * 3. CONTINUOUS ROTATION & RADIAL VISUALIZER ANIMATION LOOP
+     * 3. ROTATION & VISUALIZER LOOP
      ********************************************************************/
     function animateTurntable(now) {
       const dt = (now - state.lastFrameTime) / 1000;
       state.lastFrameTime = now;
 
-      // 33.33 RPM corresponds to 200 degrees per second at 100% (1.0x) speed
       if (state.isPlaying && !audio.paused) {
-        const speedMultiplier = state.speedPercent / 100;
-        const degreesPerSecond = 200 * speedMultiplier;
+        const degreesPerSecond = 200 * (state.speedPercent / 100);
         state.discAngle = (state.discAngle + degreesPerSecond * dt) % 360;
         vinylDisc.style.transform = `rotate(${state.discAngle.toFixed(2)}deg)`;
       }
-
       drawRadialVisualizer();
       requestAnimationFrame(animateTurntable);
     }
@@ -922,32 +596,23 @@
 
       ctx.save();
       ctx.scale(dpr, dpr);
-      const w = rect.width;
-      const h = rect.height;
+      const w = rect.width, h = rect.height;
       ctx.clearRect(0, 0, w, h);
 
-      const cx = w / 2;
-      const cy = h / 2;
+      const cx = w / 2, cy = h / 2;
       const baseRadius = (w * 0.82) / 2 + 6;
       const bars = 48;
 
-      if (state.analyser && state.isPlaying) {
-        state.analyser.getByteFrequencyData(state.freqData);
-      }
+      if (state.analyser && state.isPlaying) state.analyser.getByteFrequencyData(state.freqData);
 
       for (let i = 0; i < bars; i++) {
         const angle = (i / bars) * Math.PI * 2 - Math.PI / 2;
         const val = (state.freqData && state.isPlaying) ? state.freqData[i % 32] : 8;
         const barHeight = Math.max(3, (val / 255) * 22);
 
-        const x1 = cx + Math.cos(angle) * baseRadius;
-        const y1 = cy + Math.sin(angle) * baseRadius;
-        const x2 = cx + Math.cos(angle) * (baseRadius + barHeight);
-        const y2 = cy + Math.sin(angle) * (baseRadius + barHeight);
-
         ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
+        ctx.moveTo(cx + Math.cos(angle) * baseRadius, cy + Math.sin(angle) * baseRadius);
+        ctx.lineTo(cx + Math.cos(angle) * (baseRadius + barHeight), cy + Math.sin(angle) * (baseRadius + barHeight));
         ctx.strokeStyle = state.isPlaying
           ? `hsla(${200 + (i / bars) * 120}, 90%, 72%, ${0.25 + (val / 255) * 0.65})`
           : 'rgba(255, 255, 255, 0.12)';
@@ -959,7 +624,7 @@
     }
 
     /********************************************************************
-     * 4. TRACK LOADING, PLAYBACK & SEEK UTILITIES
+     * 4. TRACK LOADING & PLAYBACK
      ********************************************************************/
     function formatTime(sec) {
       if (!isFinite(sec) || sec < 0) return '0:00';
@@ -993,10 +658,7 @@
     }
 
     function loadTrack(index, autoPlay = false) {
-      if (!state.tracks.length) {
-        resetEmptyDeckUI();
-        return;
-      }
+      if (!state.tracks.length) { resetEmptyDeckUI(); return; }
 
       state.currentIndex = (index + state.tracks.length) % state.tracks.length;
       const track = state.tracks[state.currentIndex];
@@ -1005,7 +667,6 @@
       applySpeedToAudio();
       clearABLoop();
 
-      // Update UI metadata & ambient theme colors
       document.getElementById('trackTitle').textContent = track.title;
       document.getElementById('trackArtist').textContent = track.artist;
       document.getElementById('discLabelTitle').textContent = track.title;
@@ -1021,27 +682,17 @@
       renderPlaylist();
       renderMarkersUI();
 
-      if (autoPlay) {
-        playAudio();
-      } else {
-        updatePlayStateUI(false);
-      }
+      if (autoPlay) playAudio(); else updatePlayStateUI(false);
     }
 
     function playAudio() {
       const track = getActiveTrack();
-      if (!track) {
-        fileInput.click();
-        return;
-      }
+      if (!track) { fileInput.click(); return; }
       ensureAudioContext();
 
-      // If Auto-Start from Marker is enabled and we're near the start (or paused), jump to last marker
       if (state.autoStartFromLastMarker && audio.paused) {
         const targetMarker = getTargetLastMarker(track);
-        if (targetMarker) {
-          audio.currentTime = targetMarker.time;
-        }
+        if (targetMarker) audio.currentTime = targetMarker.time;
       }
 
       audio.play().then(() => {
@@ -1060,15 +711,8 @@
     }
 
     function togglePlayPause() {
-      if (!state.tracks.length) {
-        fileInput.click();
-        return;
-      }
-      if (audio.paused) {
-        playAudio();
-      } else {
-        pauseAudio();
-      }
+      if (!state.tracks.length) { fileInput.click(); return; }
+      if (audio.paused) playAudio(); else pauseAudio();
     }
 
     function updatePlayStateUI(playing) {
@@ -1101,7 +745,7 @@
     }
 
     /********************************************************************
-     * 5. YOUTUBE-STYLE TIMESTAMP MARKERS & "PLAY FROM LAST MARKER"
+     * 5. TIMESTAMP MARKERS
      ********************************************************************/
     function addTimestampMarker() {
       const track = getActiveTrack();
@@ -1110,7 +754,6 @@
       const currentSec = audio.currentTime;
       if (!Array.isArray(track.markers)) track.markers = [];
 
-      // Avoid duplicate markers within 0.4 seconds
       const existing = track.markers.find((m) => Math.abs(m.time - currentSec) < 0.4);
       if (existing) {
         track.lastActiveMarkerId = existing.id;
@@ -1119,11 +762,10 @@
       }
 
       const customLabel = markerLabelInput.value.trim();
-      const markerNumber = track.markers.length + 1;
       const newMarker = {
         id: 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
         time: currentSec,
-        label: customLabel || `Marker ${markerNumber}`
+        label: customLabel || `Marker ${track.markers.length + 1}`
       };
 
       track.markers.push(newMarker);
@@ -1134,17 +776,12 @@
       renderMarkersUI();
     }
 
-    // Determines the "last marker" relative to current playback position or last explicitly selected/created marker
     function getTargetLastMarker(track) {
       if (!track || !Array.isArray(track.markers) || track.markers.length === 0) return null;
 
-      // Find all markers at or before current playback position (plus small 0.35s buffer)
       const passedMarkers = track.markers.filter((m) => m.time <= audio.currentTime + 0.35);
-      if (passedMarkers.length > 0) {
-        return passedMarkers[passedMarkers.length - 1];
-      }
+      if (passedMarkers.length > 0) return passedMarkers[passedMarkers.length - 1];
 
-      // If current time is before the first marker, use the last explicitly visited/created marker or first marker
       if (track.lastActiveMarkerId) {
         const byId = track.markers.find((m) => m.id === track.lastActiveMarkerId);
         if (byId) return byId;
@@ -1155,7 +792,6 @@
     function playFromLastMarker() {
       const track = getActiveTrack();
       if (!track || !Array.isArray(track.markers) || track.markers.length === 0) return;
-
       const target = getTargetLastMarker(track);
       if (!target) return;
 
@@ -1187,6 +823,10 @@
       renderMarkersUI();
     }
 
+    function escapeHTML(str) {
+      return String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
     function updateActiveMarkerHighlight() {
       const track = getActiveTrack();
       if (!track || !Array.isArray(track.markers) || track.markers.length === 0) {
@@ -1202,7 +842,6 @@
         lastMarkerIndicator.classList.add('hidden');
       }
 
-      // Highlight the active dot on the timeline
       timelineMarkersLayer.querySelectorAll('.timeline-marker-dot').forEach((dot) => {
         dot.classList.toggle('active-last-marker', activeMarker && dot.dataset.markerId === activeMarker.id);
       });
@@ -1226,7 +865,6 @@
       track.markers.forEach((m) => {
         const isLastActive = activeMarker && activeMarker.id === m.id;
 
-        // 1. Render YouTube-style dot on the timeline scrubber
         if (duration > 0) {
           const pct = Math.max(0, Math.min(100, (m.time / duration) * 100));
           const dot = document.createElement('button');
@@ -1236,11 +874,7 @@
           dot.style.left = `${pct}%`;
           dot.title = `${m.label} • ${formatTime(m.time)} (Click to play from here)`;
 
-          dot.addEventListener('click', (e) => {
-            e.stopPropagation();
-            jumpToMarker(m.id);
-          });
-
+          dot.addEventListener('click', (e) => { e.stopPropagation(); jumpToMarker(m.id); });
           dot.addEventListener('mouseenter', () => {
             seekTooltip.style.left = `${pct}%`;
             seekTooltip.textContent = `🔖 ${m.label} (${formatTime(m.time)})`;
@@ -1249,7 +883,6 @@
           timelineMarkersLayer.appendChild(dot);
         }
 
-        // 2. Render interactive chip in the markers list
         const chip = document.createElement('div');
         chip.className = `inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-[11px] transition-all cursor-pointer border ${
           isLastActive
@@ -1259,17 +892,13 @@
 
         chip.innerHTML = `
           <span class="w-1.5 h-1.5 rounded-full ${isLastActive ? 'bg-sky-300' : 'bg-amber-400'}"></span>
-          <span class="font-medium truncate max-w-[110px]">${m.label}</span>
+          <span class="font-medium truncate max-w-[110px]">${escapeHTML(m.label)}</span>
           <span class="mono text-white/55">${formatTime(m.time)}</span>
           <button type="button" class="del-marker-btn ml-0.5 text-white/40 hover:text-rose-300 px-0.5" title="Remove marker">&times;</button>
         `;
 
         chip.addEventListener('click', (e) => {
-          if (e.target.closest('.del-marker-btn')) {
-            e.stopPropagation();
-            deleteMarker(m.id);
-            return;
-          }
+          if (e.target.closest('.del-marker-btn')) { e.stopPropagation(); deleteMarker(m.id); return; }
           jumpToMarker(m.id);
         });
 
@@ -1280,7 +909,63 @@
     }
 
     /********************************************************************
-     * 6. GRANULAR PLAYBACK SPEED CONTROL (25% TO 300%)
+     * 5b. PERSISTENT MARKER STORAGE (localStorage)
+     * Markers are matched to an audio file by "name|size".
+     ********************************************************************/
+    const MARKER_STORAGE_KEY = 'aura_saved_markers_v1';
+
+    function getTrackSignature(file) {
+      return `${file.name}|${file.size}`;
+    }
+
+    function readSavedMarkersDB() {
+      try {
+        return JSON.parse(localStorage.getItem(MARKER_STORAGE_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function loadSavedMarkersFor(signature) {
+      const entry = readSavedMarkersDB()[signature];
+      if (!entry || !Array.isArray(entry.markers)) return [];
+      return entry.markers
+        .map((m) => ({
+          id: m.id || 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+          time: Number(m.time) || 0,
+          label: m.label || 'Marker'
+        }))
+        .sort((a, b) => a.time - b.time);
+    }
+
+    function saveCurrentTrackMarkers() {
+      const track = getActiveTrack();
+      if (!track || !track.signature) return;
+
+      const db = readSavedMarkersDB();
+      const markers = Array.isArray(track.markers) ? track.markers : [];
+
+      if (markers.length === 0) {
+        delete db[track.signature];       // nothing to keep -> remove old save
+      } else {
+        db[track.signature] = {           // overwrites any previous save
+          title: track.title,
+          savedAt: Date.now(),
+          markers: markers.map((m) => ({ id: m.id, time: m.time, label: m.label }))
+        };
+      }
+
+      try {
+        localStorage.setItem(MARKER_STORAGE_KEY, JSON.stringify(db));
+        saveMarkersLabel.textContent = markers.length ? `Saved ✓ (${markers.length})` : 'Cleared ✓';
+      } catch (e) {
+        saveMarkersLabel.textContent = 'Save failed';
+      }
+      setTimeout(() => { saveMarkersLabel.textContent = 'Save Markers'; }, 1800);
+    }
+
+    /********************************************************************
+     * 6. PLAYBACK SPEED (25% – 300%)
      ********************************************************************/
     function setPlaybackSpeed(percent) {
       const clamped = Math.max(25, Math.min(300, Math.round(percent)));
@@ -1291,15 +976,10 @@
       speedPercentDisplay.textContent = `${clamped}%`;
       speedMultiplierDisplay.textContent = `${rate.toFixed(2)}× ${clamped === 100 ? 'Normal' : clamped < 100 ? 'Slow' : 'Fast'}`;
       topSpeedBadge.textContent = `${clamped}%`;
+      rpmReadout.textContent = (33.333 * rate).toFixed(1);
 
-      // Scale RPM readout proportionally (33.3 RPM at 100%)
-      const rpm = (33.333 * rate).toFixed(1);
-      rpmReadout.textContent = rpm;
-
-      // Highlight matching preset pill if any
       document.querySelectorAll('.speed-preset').forEach((btn) => {
-        const val = Number(btn.dataset.speed);
-        btn.classList.toggle('glass-pill-active', val === clamped);
+        btn.classList.toggle('glass-pill-active', Number(btn.dataset.speed) === clamped);
       });
 
       applySpeedToAudio();
@@ -1310,17 +990,13 @@
       audio.playbackRate = rate;
       audio.defaultPlaybackRate = rate;
 
-      if ('preservesPitch' in audio) {
-        audio.preservesPitch = state.preservesPitch;
-      } else if ('mozPreservesPitch' in audio) {
-        audio.mozPreservesPitch = state.preservesPitch;
-      } else if ('webkitPreservesPitch' in audio) {
-        audio.webkitPreservesPitch = state.preservesPitch;
-      }
+      if ('preservesPitch' in audio) audio.preservesPitch = state.preservesPitch;
+      else if ('mozPreservesPitch' in audio) audio.mozPreservesPitch = state.preservesPitch;
+      else if ('webkitPreservesPitch' in audio) audio.webkitPreservesPitch = state.preservesPitch;
     }
 
     /********************************************************************
-     * 7. A-B STUDY / TRANSCRIPTION LOOP UTILITY
+     * 7. A-B LOOP
      ********************************************************************/
     const abLoopBtn = document.getElementById('abLoopBtn');
     const abHighlight = document.getElementById('abHighlight');
@@ -1357,37 +1033,23 @@
 
     function updateABHighlightBar() {
       if (state.abPointA !== null && state.abPointB !== null && isFinite(audio.duration)) {
-        const startPct = (state.abPointA / audio.duration) * 100;
-        const widthPct = ((state.abPointB - state.abPointA) / audio.duration) * 100;
-        abHighlight.style.left = `${startPct}%`;
-        abHighlight.style.width = `${widthPct}%`;
+        abHighlight.style.left = `${(state.abPointA / audio.duration) * 100}%`;
+        abHighlight.style.width = `${((state.abPointB - state.abPointA) / audio.duration) * 100}%`;
         abHighlight.classList.remove('hidden');
       }
     }
 
     /********************************************************************
-     * 8. PLAYLIST RENDERING, REORDERING (DRAG & DROP + UP/DOWN) & UPLOAD
+     * 8. PLAYLIST, REORDERING & UPLOAD
      ********************************************************************/
     function moveTrackInPlaylist(fromIndex, toIndex) {
-      if (
-        fromIndex === toIndex ||
-        fromIndex < 0 ||
-        toIndex < 0 ||
-        fromIndex >= state.tracks.length ||
-        toIndex >= state.tracks.length
-      ) {
-        return;
-      }
+      if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 ||
+          fromIndex >= state.tracks.length || toIndex >= state.tracks.length) return;
 
       const activeTrackRef = getActiveTrack();
       const [movedItem] = state.tracks.splice(fromIndex, 1);
       state.tracks.splice(toIndex, 0, movedItem);
-
-      // Keep active playing track index synchronized without interrupting audio
-      if (activeTrackRef) {
-        state.currentIndex = state.tracks.indexOf(activeTrackRef);
-      }
-
+      if (activeTrackRef) state.currentIndex = state.tracks.indexOf(activeTrackRef);
       renderPlaylist();
     }
 
@@ -1398,18 +1060,12 @@
 
       state.tracks.splice(index, 1);
 
-      if (state.tracks.length === 0) {
-        resetEmptyDeckUI();
-        return;
-      }
+      if (state.tracks.length === 0) { resetEmptyDeckUI(); return; }
 
       if (wasRemovingCurrent) {
-        const nextIdx = Math.min(index, state.tracks.length - 1);
-        loadTrack(nextIdx, wasPlaying);
+        loadTrack(Math.min(index, state.tracks.length - 1), wasPlaying);
       } else {
-        if (index < state.currentIndex) {
-          state.currentIndex -= 1;
-        }
+        if (index < state.currentIndex) state.currentIndex -= 1;
         renderPlaylist();
       }
     }
@@ -1419,7 +1075,6 @@
       clearQueueBtn.classList.toggle('hidden', state.tracks.length === 0);
       playlistContainer.innerHTML = '';
 
-      // Minimalistic Apple Glassmorphism Empty State when no tracks are loaded
       if (state.tracks.length === 0) {
         const emptyEl = document.createElement('div');
         emptyEl.className = 'glass-card rounded-2xl p-6 text-center border border-white/10 my-1';
@@ -1442,9 +1097,7 @@
         item.draggable = true;
         item.dataset.index = idx;
         item.className = `group flex items-center justify-between gap-2 p-2.5 rounded-2xl cursor-pointer transition-all ${
-          isCurrent
-            ? 'bg-white/15 border border-white/30 shadow'
-            : 'hover:bg-white/[0.07] border border-transparent'
+          isCurrent ? 'bg-white/15 border border-white/30 shadow' : 'hover:bg-white/[0.07] border border-transparent'
         }`;
 
         const [c1, c2] = t.colors || ['#38bdf8', '#6366f1'];
@@ -1452,89 +1105,54 @@
 
         item.innerHTML = `
           <div class="flex items-center gap-2.5 min-w-0 flex-1">
-            <!-- Drag Handle Icon -->
             <div class="drag-handle cursor-grab active:cursor-grabbing text-white/30 hover:text-white/75 p-1 shrink-0" title="Drag to reorder">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h.01M8 12h.01M8 18h.01M16 6h.01M16 12h.01M16 18h.01"/>
-              </svg>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 6h.01M8 12h.01M8 18h.01M16 6h.01M16 12h.01M16 18h.01"/></svg>
             </div>
 
             <div class="w-9 h-9 rounded-xl shrink-0 flex items-center justify-center border border-white/20"
                  style="background: linear-gradient(135deg, ${c1}, ${c2})">
-              ${
-                isCurrent && state.isPlaying
-                  ? '<span class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>'
-                  : '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'
-              }
+              ${isCurrent && state.isPlaying
+                ? '<span class="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>'
+                : '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'}
             </div>
 
             <div class="min-w-0 flex-1">
-              <p class="text-xs sm:text-sm font-medium text-white truncate">${t.title}</p>
+              <p class="text-xs sm:text-sm font-medium text-white truncate">${escapeHTML(t.title)}</p>
               <div class="flex items-center gap-2 text-[11px] text-white/50 truncate">
-                <span class="truncate">${t.artist}</span>
+                <span class="truncate">${escapeHTML(t.artist)}</span>
                 ${markerCount > 0 ? `<span class="text-amber-300/90 mono shrink-0">🔖 ${markerCount}</span>` : ''}
               </div>
             </div>
           </div>
 
-          <!-- Right Controls: Duration + Up/Down Reorder + Remove -->
           <div class="flex items-center gap-1 shrink-0">
             <span class="text-xs mono text-white/55 mr-1">${t.duration ? formatTime(t.duration) : '--:--'}</span>
 
             <button type="button" class="move-up-btn glass-pill p-1 rounded-lg text-white/60 hover:text-white disabled:opacity-25 disabled:pointer-events-none"
                     ${idx === 0 ? 'disabled' : ''} title="Move Up">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
-              </svg>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
             </button>
 
             <button type="button" class="move-down-btn glass-pill p-1 rounded-lg text-white/60 hover:text-white disabled:opacity-25 disabled:pointer-events-none"
                     ${idx === state.tracks.length - 1 ? 'disabled' : ''} title="Move Down">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-              </svg>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             </button>
 
             <button type="button" class="remove-track-btn glass-pill p-1 rounded-lg text-white/45 hover:text-rose-300" title="Remove track">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-              </svg>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
           </div>
         `;
 
-        // Click to play or toggle pause (ignoring reorder/delete buttons)
         item.addEventListener('click', (e) => {
-          if (
-            e.target.closest('.move-up-btn') ||
-            e.target.closest('.move-down-btn') ||
-            e.target.closest('.remove-track-btn')
-          ) {
-            return;
-          }
-          if (idx === state.currentIndex) {
-            togglePlayPause();
-          } else {
-            loadTrack(idx, true);
-          }
+          if (e.target.closest('.move-up-btn') || e.target.closest('.move-down-btn') || e.target.closest('.remove-track-btn')) return;
+          if (idx === state.currentIndex) togglePlayPause(); else loadTrack(idx, true);
         });
 
-        item.querySelector('.move-up-btn').addEventListener('click', (e) => {
-          e.stopPropagation();
-          moveTrackInPlaylist(idx, idx - 1);
-        });
+        item.querySelector('.move-up-btn').addEventListener('click', (e) => { e.stopPropagation(); moveTrackInPlaylist(idx, idx - 1); });
+        item.querySelector('.move-down-btn').addEventListener('click', (e) => { e.stopPropagation(); moveTrackInPlaylist(idx, idx + 1); });
+        item.querySelector('.remove-track-btn').addEventListener('click', (e) => { e.stopPropagation(); removeTrackFromPlaylist(idx); });
 
-        item.querySelector('.move-down-btn').addEventListener('click', (e) => {
-          e.stopPropagation();
-          moveTrackInPlaylist(idx, idx + 1);
-        });
-
-        item.querySelector('.remove-track-btn').addEventListener('click', (e) => {
-          e.stopPropagation();
-          removeTrackFromPlaylist(idx);
-        });
-
-        // HTML5 Drag-and-Drop Reordering Events
         item.addEventListener('dragstart', (e) => {
           state.dragSourceIndex = idx;
           item.classList.add('playlist-item-dragging');
@@ -1554,7 +1172,6 @@
           e.preventDefault();
           e.stopPropagation();
           if (state.dragSourceIndex === null || state.dragSourceIndex === idx) return;
-
           const rect = item.getBoundingClientRect();
           const isTopHalf = e.clientY < rect.top + rect.height / 2;
           item.classList.toggle('playlist-drop-above', isTopHalf);
@@ -1601,6 +1218,10 @@
         const cleanTitle = file.name.replace(/\.[^/.]+$/, '');
         const palette = palettes[state.tracks.length % palettes.length];
 
+        // Restore any previously saved markers for this exact file
+        const signature = getTrackSignature(file);
+        const restoredMarkers = loadSavedMarkersFor(signature);
+
         if (firstNewIndex === null) firstNewIndex = state.tracks.length;
         state.tracks.push({
           title: cleanTitle,
@@ -1609,18 +1230,17 @@
           colors: palette,
           labelTag: 'LOCAL MASTER',
           url,
-          markers: [],
-          lastActiveMarkerId: null
+          signature,
+          markers: restoredMarkers,
+          lastActiveMarkerId: restoredMarkers.length ? restoredMarkers[restoredMarkers.length - 1].id : null
         });
       });
 
-      if (firstNewIndex !== null) {
-        loadTrack(firstNewIndex, true);
-      }
+      if (firstNewIndex !== null) loadTrack(firstNewIndex, true);
     }
 
     /********************************************************************
-     * 9. EVENT LISTENERS & KEYBOARD SHORTCUTS
+     * 9. EVENT LISTENERS & SHORTCUTS
      ********************************************************************/
     playPauseBtn.addEventListener('click', togglePlayPause);
     vinylDisc.addEventListener('click', togglePlayPause);
@@ -1628,36 +1248,25 @@
     prevBtn.addEventListener('click', () => {
       if (!state.tracks.length) return;
       const track = getActiveTrack();
-      // If Auto-Start from Marker is enabled and track has markers, jump to last marker first
       if (state.autoStartFromLastMarker && track && track.markers && track.markers.length > 0) {
         playFromLastMarker();
         return;
       }
-      if (audio.currentTime > 3) {
-        audio.currentTime = 0;
-      } else {
-        loadTrack(state.currentIndex - 1, state.isPlaying);
-      }
+      if (audio.currentTime > 3) audio.currentTime = 0;
+      else loadTrack(state.currentIndex - 1, state.isPlaying);
     });
 
     nextBtn.addEventListener('click', () => {
       if (!state.tracks.length) return;
-      if (state.isShuffle) {
-        const rand = Math.floor(Math.random() * state.tracks.length);
-        loadTrack(rand, state.isPlaying);
-      } else {
-        loadTrack(state.currentIndex + 1, state.isPlaying);
-      }
+      if (state.isShuffle) loadTrack(Math.floor(Math.random() * state.tracks.length), state.isPlaying);
+      else loadTrack(state.currentIndex + 1, state.isPlaying);
     });
 
-    // Timestamp Marker Controls
     addMarkerBtn.addEventListener('click', addTimestampMarker);
+    saveMarkersBtn.addEventListener('click', saveCurrentTrackMarkers);
     playLastMarkerBtn.addEventListener('click', playFromLastMarker);
     markerLabelInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        addTimestampMarker();
-      }
+      if (e.key === 'Enter') { e.preventDefault(); addTimestampMarker(); }
     });
     playFromMarkerModeToggle.addEventListener('change', (e) => {
       state.autoStartFromLastMarker = e.target.checked;
@@ -1669,13 +1278,9 @@
     });
 
     document.querySelectorAll('.skip-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const delta = parseFloat(btn.dataset.skip);
-        skipSeconds(delta);
-      });
+      btn.addEventListener('click', () => skipSeconds(parseFloat(btn.dataset.skip)));
     });
 
-    // Progress Bar Seeking & Hover Timestamp
     progressBarTrack.addEventListener('click', (e) => {
       if (!isFinite(audio.duration)) return;
       const rect = progressBarTrack.getBoundingClientRect();
@@ -1693,19 +1298,12 @@
       seekTooltip.textContent = formatTime(ratio * audio.duration);
     });
 
-    // Audio Element TimeUpdate & Metadata
     audio.addEventListener('timeupdate', () => {
       if (!isFinite(audio.duration)) return;
-      if (
-        state.abPointA !== null &&
-        state.abPointB !== null &&
-        audio.currentTime >= state.abPointB
-      ) {
+      if (state.abPointA !== null && state.abPointB !== null && audio.currentTime >= state.abPointB) {
         audio.currentTime = state.abPointA;
       }
-
-      const pct = (audio.currentTime / audio.duration) * 100;
-      progressFill.style.width = `${pct}%`;
+      progressFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
       currentTimeEl.textContent = formatTime(audio.currentTime);
       updateActiveMarkerHighlight();
     });
@@ -1716,7 +1314,7 @@
       if (track) track.duration = audio.duration;
       applySpeedToAudio();
       renderPlaylist();
-      renderMarkersUI();
+      renderMarkersUI();   // re-draw restored markers on the timeline now that duration is known
     });
 
     audio.addEventListener('ended', () => {
@@ -1727,32 +1325,18 @@
         audio.currentTime = target ? target.time : 0;
         playAudio();
       } else if (state.isShuffle) {
-        const nextIdx = Math.floor(Math.random() * state.tracks.length);
-        loadTrack(nextIdx, true);
+        loadTrack(Math.floor(Math.random() * state.tracks.length), true);
       } else {
         loadTrack(state.currentIndex + 1, true);
       }
     });
 
-    // Speed Slider, -5% / +5% Buttons & Presets
-    speedSlider.addEventListener('input', (e) => {
-      setPlaybackSpeed(Number(e.target.value));
-    });
-
-    speedMinus5.addEventListener('click', () => {
-      setPlaybackSpeed(state.speedPercent - 5);
-    });
-
-    speedPlus5.addEventListener('click', () => {
-      setPlaybackSpeed(state.speedPercent + 5);
-    });
-
+    speedSlider.addEventListener('input', (e) => setPlaybackSpeed(Number(e.target.value)));
+    speedMinus5.addEventListener('click', () => setPlaybackSpeed(state.speedPercent - 5));
+    speedPlus5.addEventListener('click', () => setPlaybackSpeed(state.speedPercent + 5));
     document.querySelectorAll('.speed-preset').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        setPlaybackSpeed(Number(btn.dataset.speed));
-      });
+      btn.addEventListener('click', () => setPlaybackSpeed(Number(btn.dataset.speed)));
     });
-
     resetSpeedBtn.addEventListener('click', () => setPlaybackSpeed(100));
 
     preservePitchToggle.addEventListener('change', (e) => {
@@ -1760,14 +1344,12 @@
       applySpeedToAudio();
     });
 
-    // Volume, Loop, Shuffle, A-B Loop, Tonearm
     const volumeSlider = document.getElementById('volumeSlider');
     const muteBtn = document.getElementById('muteBtn');
     volumeSlider.addEventListener('input', (e) => {
       audio.volume = Number(e.target.value);
       audio.muted = audio.volume === 0;
     });
-
     muteBtn.addEventListener('click', () => {
       audio.muted = !audio.muted;
       volumeSlider.value = audio.muted ? 0 : audio.volume || 0.85;
@@ -1777,7 +1359,6 @@
       state.isLooping = !state.isLooping;
       e.currentTarget.classList.toggle('glass-pill-active', state.isLooping);
     });
-
     document.getElementById('shuffleBtn').addEventListener('click', (e) => {
       state.isShuffle = !state.isShuffle;
       e.currentTarget.classList.toggle('glass-pill-active', state.isShuffle);
@@ -1791,14 +1372,10 @@
         ? 'w-2 h-2 rounded-full bg-emerald-400'
         : 'w-2 h-2 rounded-full bg-white/30';
       tonearm.style.opacity = state.tonearmEnabled ? '1' : '0';
-      if (state.tonearmEnabled && state.isPlaying) {
-        tonearm.classList.add('engaged');
-      } else {
-        tonearm.classList.remove('engaged');
-      }
+      if (state.tonearmEnabled && state.isPlaying) tonearm.classList.add('engaged');
+      else tonearm.classList.remove('engaged');
     });
 
-    // File Upload & Drag-and-Drop (ignores internal playlist item drag)
     fileInput.addEventListener('change', (e) => {
       if (e.target.files.length) handleFilesAdded(e.target.files);
       fileInput.value = '';
@@ -1809,22 +1386,17 @@
       e.preventDefault();
       dropOverlay.classList.add('drop-active');
     });
-
     dropOverlay.addEventListener('dragleave', (e) => {
       e.preventDefault();
       dropOverlay.classList.remove('drop-active');
     });
-
     window.addEventListener('drop', (e) => {
       if (state.dragSourceIndex !== null) return;
       e.preventDefault();
       dropOverlay.classList.remove('drop-active');
-      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
-        handleFilesAdded(e.dataTransfer.files);
-      }
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) handleFilesAdded(e.dataTransfer.files);
     });
 
-    // Shortcuts Modal
     const shortcutsModal = document.getElementById('shortcutsModal');
     document.getElementById('shortcutsBtn').addEventListener('click', () => {
       shortcutsModal.classList.remove('hidden');
@@ -1841,37 +1413,27 @@
       }
     });
 
-    // Keyboard Shortcuts
     window.addEventListener('keydown', (e) => {
+      // Ctrl/Cmd + S -> save markers (works even while typing in the note box)
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        saveCurrentTrackMarkers();
+        return;
+      }
+
       if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
 
-      if (e.code === 'Space') {
-        e.preventDefault();
-        togglePlayPause();
-      } else if (e.code === 'ArrowLeft') {
-        e.preventDefault();
-        skipSeconds(e.shiftKey ? -10 : -5);
-      } else if (e.code === 'ArrowRight') {
-        e.preventDefault();
-        skipSeconds(e.shiftKey ? 10 : 5);
-      } else if (e.key === '[') {
-        setPlaybackSpeed(state.speedPercent - 5);
-      } else if (e.key === ']') {
-        setPlaybackSpeed(state.speedPercent + 5);
-      } else if (e.key.toLowerCase() === 'b') {
-        e.preventDefault();
-        addTimestampMarker();
-      } else if (e.key.toLowerCase() === 'j') {
-        e.preventDefault();
-        playFromLastMarker();
-      } else if (e.key.toLowerCase() === 'r') {
-        setPlaybackSpeed(100);
-      } else if (e.key.toLowerCase() === 'm') {
-        muteBtn.click();
-      }
+      if (e.code === 'Space') { e.preventDefault(); togglePlayPause(); }
+      else if (e.code === 'ArrowLeft') { e.preventDefault(); skipSeconds(e.shiftKey ? -10 : -5); }
+      else if (e.code === 'ArrowRight') { e.preventDefault(); skipSeconds(e.shiftKey ? 10 : 5); }
+      else if (e.key === '[') setPlaybackSpeed(state.speedPercent - 5);
+      else if (e.key === ']') setPlaybackSpeed(state.speedPercent + 5);
+      else if (e.key.toLowerCase() === 'b') { e.preventDefault(); addTimestampMarker(); }
+      else if (e.key.toLowerCase() === 'j') { e.preventDefault(); playFromLastMarker(); }
+      else if (e.key.toLowerCase() === 'r') setPlaybackSpeed(100);
+      else if (e.key.toLowerCase() === 'm') muteBtn.click();
     });
 
-    // Initialize App on Load with clean empty queue
     window.addEventListener('load', () => {
       audio.volume = 0.85;
       resetEmptyDeckUI();
